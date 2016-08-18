@@ -1,0 +1,23 @@
+<div class="w3-half w3-padding">
+  <div class="w3-card-4">
+    <header class="w3-container w3-deep-purple">
+      <h3>Edit Event</h3>
+    </header>
+    <form action="/events/<%= @event.id %>" method="post" class="w3-form">
+      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+      <label class="w3-label">Name</label>
+      <input class="w3-input" type="name" name="event[name]" value="<%= @event.name %>">
+      <label class="w3-label">Date</label>
+      <input class="w3-input" type="date" name="event[date]" value="<%= @event.date.strftime('%Y-%m-%d') %>">
+      <label class="w3-label">City</label>
+      <input class="w3-input" type="text" name="event[city]" value="<%= @event.city %>">
+      <label class="w3-label">State</label>
+      <select class="w3-select" name="event[state]" value="<%= @event.state %>">
+        <% us_states.each do |s| %>
+          <option <%= 'selected' if s == @event.state %>><%= s %></option>
+        <% end %>  
+      </select> 
+      <input class="w3-btn" type="submit" value="Update Event">
+    </form>
+  </div>
+</div>

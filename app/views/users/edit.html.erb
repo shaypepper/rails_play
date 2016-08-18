@@ -1,0 +1,25 @@
+<div class="w3-half w3-padding">
+  <div class="w3-card-4">
+    <header class="w3-container w3-deep-purple">
+      <h3>Edit your profile</h3>
+    </header>
+    <form action="/users/<%= current_user.id %>" method="post" class="w3-container w3-form">
+      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+      <label class="w3-label">First name</label>
+      <input class="w3-input" type="text" name="user[first_name]" value="<%= current_user.first_name %>">
+      <label class="w3-label">Last name</label>
+      <input class="w3-input" type="text" name="user[last_name]" value="<%= current_user.last_name %>">
+      <label class="w3-label">City</label>
+      <input class="w3-input" type="text" name="user[city]" value="<%= current_user.city %>">
+      <label class="w3-label">State</label>
+      <select class="w3-select" name="user[state]">
+        <% us_states.each do |s| %>
+          <option <%= 'selected' if s == current_user.state %>><%= s %></option>
+        <% end %>  
+      </select>   
+      <label class="w3-label">Email</label>
+      <input class="w3-input" type="email" name="user[email]" value="<%= current_user.email %>">
+      <input class="w3-btn" type="submit" value="Update Profile">
+    </form>
+  </div>
+</div>

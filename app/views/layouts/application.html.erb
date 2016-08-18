@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BeltPrep</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <% if current_user %>
+    <ul class="w3-navbar w3-black">
+      <li class="w3-navitem">Welcome, <%= current_user.first_name %>!</li>
+      <li class="w3-right"><a href="/logout">Logout</a></li>
+      <li class="w3-right"><a href="/events">Event Dashboard</a></li>
+      <li class="w3-right"><a href="/users/<%= current_user.id %>/edit">Edit Profile</a></li>
+    </ul>
+  <% end %>
+
+    
+
+
+  <% if flash[:errors] %>
+    <% flash[:errors].each do |e| %>
+      <p><%= e %></p>
+    <% end %>
+  <% end %>
+<%= yield %>
+
+</body>
+</html>

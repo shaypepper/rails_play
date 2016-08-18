@@ -1,0 +1,36 @@
+<div class="w3-half w3-padding">
+  <h1>Register</h1>
+  <form action="/users" method="post">
+    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+    <label class="w3-label">First name</label>
+    <input class="w3-input" type="text" name="user[first_name]">
+    <label class="w3-label">Last name</label>
+    <input class="w3-input" type="text" name="user[last_name]">
+    <label class="w3-label">City</label>
+    <input class="w3-input" type="text" name="user[city]">
+    <label class="w3-label">State</label>
+    <select class="w3-select">
+      <% us_states.each do |s| %>
+        <option><%= s %></option>
+      <% end %>  
+    </select>   
+    <label class="w3-label">Email</label>
+    <input class="w3-input" type="email" name="user[email]">
+    <label class="w3-label">Password</label>
+    <input class="w3-input" type="password" name="user[password]">
+    <label class="w3-label">Confirm Password</label>
+    <input class="w3-input" type="password" name="user[password_confirmation]">
+    <input class="w3-btn" type="submit" value="register">
+  </form>
+</div>
+<div class="w3-half w3-padding">
+  <h1>Login</h1>
+  <form action="/login" method="post">
+    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+    <label class="w3-label">Email</label>
+    <input class="w3-input" type="email" name="email">
+    <label class="w3-label">Password</label>
+    <input class="w3-input" type="password" name="password">
+    <input class="w3-btn" type="submit" value="login">
+  </form>
+</div>

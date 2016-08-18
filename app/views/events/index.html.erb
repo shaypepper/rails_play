@@ -1,0 +1,122 @@
+<div class="w3-padding">
+  
+
+  <h3>Here are some of the events in your state:</h3>
+  <table class="w3-table-all w3-card-4">
+    <thead>
+      <tr class="w3-deep-purple">
+        <th>Name</th>
+        <th>Date</th>
+        <th>City</th>
+        <th>Host</th>
+        <th>Action/Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @events[:local].each do |event| %>
+        <tr>
+          <td><a href="/events/<%= event.id %>"><%= event.name %></a></td>
+          <td><%= event.date.strftime('%m/%d/%Y') %></td>
+          <td><%= event.city %></td>
+          <td><%= event.user.first_name %></td>
+          <td>
+            <% if event.user.id == current_user.id %>
+              <a class="w3-btn w3-tiny" href="/events/<%= event.id %>/edit">Edit</a>
+              <form action="/events/<%= event.id %>" method="post">
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <input type="hidden" value="delete" name="_method">
+                <input class="w3-btn w3-tiny" type="submit" value="Cancel">
+              </form>
+            <% elsif current_user.events.include?(event) %>
+              Joining 
+              <form action="/attendees/<%= current_user.attendees.where(event: event).first.id %>" method="post">
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <input type="hidden" value="delete" name="_method">
+                <input class="w3-btn w3-tiny" type="submit" value="Cancel">
+              </form>
+            <% else %>
+              <form action="/attendees" method="post">
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <input type="hidden" value="<%= event.id %>" name="event_id">
+                <input class="w3-btn w3-tiny" type="submit" value="Join">
+              </form>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
+  <h3>Here are some of the events in other states:</h3>
+  <table class="w3-table-all w3-card-4">
+    <thead>
+      <tr class="w3-deep-purple">
+        <th>Name</th>
+        <th>Date</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Host</th>
+        <th>Action/Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @events[:other].each do |event| %>
+        <tr>
+          <td><a href="/events/<%= event.id %>"><%= event.name %></a></td>
+          <td><%= event.date.strftime('%m/%d/%Y') %></td>
+          <td><%= event.city %></td>
+          <td><%= event.state %></td>
+          <td><%= event.user.first_name %></td>
+          <td>
+            <% if event.user.id == current_user.id %>
+              <a class="w3-btn w3-tiny" href="/events/<%= event.id %>/edit">Edit</a>
+              <form action="/events/<%= event.id %>" method="post">
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <input type="hidden" value="delete" name="_method">
+                <input class="w3-btn w3-tiny" type="submit" value="Cancel">
+              </form>
+            <% elsif current_user.events.include?(event) %>
+              Joining 
+              <form action="/attendees/<%= current_user.attendees.where(event: event).first.id %>" method="post">
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <input type="hidden" value="delete" name="_method">
+                <input class="w3-btn w3-tiny" type="submit" value="Cancel">
+              </form>
+            <% else %>
+              <form action="/attendees" method="post">
+                <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+                <input type="hidden" value="<%= event.id %>" name="event_id">
+                <input class="w3-btn w3-tiny" type="submit" value="Join">
+              </form>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="w3-half w3-padding">
+  <div class="w3-card-4">
+    <header class="w3-container w3-deep-purple">
+      <h3>Add Event</h3>
+    </header>
+    <form action="/events" method="post" class="w3-form">
+      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+      <label class="w3-label">Name</label>
+      <input class="w3-input" type="name" name="event[name]">
+      <label class="w3-label">Date</label>
+      <input class="w3-input" type="date" name="event[date]">
+      <label class="w3-label">City</label>
+      <input class="w3-input" type="text" name="event[city]">
+      <label class="w3-label">State</label>
+      <select class="w3-select" name="event[state]">
+        <% us_states.each do |s| %>
+          <option <%= 'selected' if s == current_user.state %>><%= s %></option>
+        <% end %>  
+      </select> 
+      <input class="w3-btn" type="submit" value="Create Event">
+    </form>
+  </div>
+</div>

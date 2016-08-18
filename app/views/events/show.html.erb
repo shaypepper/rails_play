@@ -1,0 +1,56 @@
+<div class="w3-twothird w3-padding">
+  <div class="w3-card-2">
+    <header class="w3-container w3-indigo">
+      <h4><%= @event.name %></h4>
+    </header>
+    <div class="w3-container">
+      <p>Host: <%= @event.user.first_name %> <%= @event.user.last_name %></p>
+      <p>Date: <%= @event.date.strftime('%D') %></p>
+      <p>Location: <%= @event.city %> <%= @event.state %></p>
+      <p>People who are joining the event: <%= @event.users.length %></p>
+    </div>
+  </div>  
+  <table class="w3-card-2 w3-all w3-table">
+    <thead>
+      <tr class="w3-amber">
+        <th>Name</th>
+        <th>Location</th>
+        <th>State</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @event.users.each do |user| %>
+        <tr>
+          <td><%= user.first_name %> <%= user.last_name %></td>
+          <td><%= user.city %></td>
+          <td><%= user.state %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>  
+</div>
+
+<div class="w3-third  w3-padding">
+  <div class="w3-card-2">
+    <header class="w3-teal w3-container">
+      <h4>Discussion about this event:</h4>
+    </header>
+    <div class="w3-container">
+      <% @comments.each do |comment| %>
+        <p>
+          <span class="w3-text-pink"><%= comment.user.first_name %> says:</span>
+          <%= comment.comment %>
+        </p>
+      <% end %>
+    </div>
+    <footer class="w3-container w3-right-align">
+      <form action="/comments" method="post">
+        <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+        <input type="hidden" value="<%= @event.id %>" name="event_id">
+        <label class="w3-label"></label>
+        <textarea class="w3-input" name="comment"></textarea>
+        <button class="w3-btn " type="submit">Submit Comments</button>
+      </form>
+    </footer>
+  </div>  
+</div>
